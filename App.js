@@ -61,7 +61,7 @@ const App = () => {
           <Text style={styles.empty}>Acabou :(</Text>
           : (
             messages.map((message, index) => (
-              <Card key={message.id} message={message.message}/>
+              <Card key={message.id} message={message} />
             ))
           )
         }

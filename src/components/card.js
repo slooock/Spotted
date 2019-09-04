@@ -4,11 +4,7 @@ import Icon from 'react-native-vector-icons/Ionicons';
 
 
 const Card = (message) => {
-    
 
-    function onClick(params) {
-        
-    };
 
     return (
         <View style={styles.container}>
@@ -18,9 +14,9 @@ const Card = (message) => {
                     source={{ uri: 'https://st2.depositphotos.com/4529029/9603/v/950/depositphotos_96031530-stock-illustration-cartoon-animal-head-icon-cat.jpg' }}
                 />
                 <View style={styles.teste}>
-                    <Text style={styles.titulo}>Titulo do spotted</Text>
+                
                     <Text style={styles.descricao}>
-                        {message.message}
+                        {message.message.message}
                 </Text>
                 </View>
             </View>
@@ -30,7 +26,7 @@ const Card = (message) => {
                 >
                     <Icon name="ios-heart" size={24} color= '#DF3A01'/>
                 </TouchableOpacity>
-                <Text style={styles.quantidade}>324</Text>
+                <Text style={styles.quantidade}>{message.message.likes}</Text>
             </View>
         </View>
     );
