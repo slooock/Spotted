@@ -16,20 +16,32 @@ var config = {
 app.initializeApp(config);
 class Firebase {
     constructor() {
-        console.log(this.db);
         if(!this.db){
-            console.log("Ola");
-            
             this.auth = app.auth();
             this.db = app.firestore();
-            console.log(this.db);
-            
         }
     }
     
     sendMessage=  (nameCollection, object) => {
         this.db.collection(nameCollection).add(object);
     };
+
+    getMessages= async (nameCollection)=>{
+        
+       const data = await this.db.collection(nameCollection)
+            .get()
+            .then(querySnapshot => {
+                const data = querySnapshot.docs.map(doc => {
+                    return {
+                        id: doc.id,
+                        message: doc.data().message
+                    }
+                });
+                // array of cities objects
+                return (data); 
+            });
+        return (data); 
+    }
 
 }
 

@@ -6,7 +6,7 @@
  * @flow
  */
 
-import React, { Fragment, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import {
   SafeAreaView,
   StyleSheet,
@@ -29,33 +29,42 @@ const App = () => {
   const [message, setMessage] = useState('');
   fadeValue = new Animated.Value(0);
   const firebase = new Firebase()
+  const [messages, setMessages] = useState([]);
 
+  useEffect(() => {
+    async function loadMessages() {
+      const msg = await firebase.getMessages("Message");
+      setMessages(msg);
+    }
+  
+    loadMessages();
+  }, [messages])
 
   function sendMessage(){
-    firebase.sendMessage("Message",{ message: message});
+    firebase.sendMessage("Message",{ 
+      message: message,
+      likes: 0
+    });
+    setMessage('');
   }
   return (
 
     <View style={styles.container}>
 
       <View style={styles.appbar}>
-        <Text style={styles.texto}>Adventinder</Text>
+        <Text style={styles.texto}>Spotted </Text>
       </View>
       <ScrollView
         style={styles.cards}
       >
-        <Card />
-        <Card />
-        <Card />
-        <Card />
-        <Card />
-        <Card />
-        <Card />
-        <Card />
-        <Card />
-        <Card />
-        <Card />
-        <Card />
+        {messages.length === 0 ?
+          <Text style={styles.empty}>Acabou :(</Text>
+          : (
+            messages.map((message, index) => (
+              <Card key={message.id} message={message.message}/>
+            ))
+          )
+        }
       </ScrollView>
 
         <View style={styles.back}>
@@ -66,6 +75,7 @@ const App = () => {
               placeholderTextColor="#FFF"
               multiline={true}
               maxLength={280}
+              value={message}
               onChangeText={setMessage}
             />
 
@@ -73,6 +83,7 @@ const App = () => {
         <TouchableOpacity 
           style={styles.icone}
           onPress={sendMessage}
+          activeOpacity={0.7}
         >
           <Icon name="ios-arrow-round-forward" size={44} color="#FFF" />
         </TouchableOpacity>
