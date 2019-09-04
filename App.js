@@ -6,7 +6,7 @@
  * @flow
  */
 
-import React, { Fragment } from 'react';
+import React, { Fragment, useState } from 'react';
 import {
   SafeAreaView,
   StyleSheet,
@@ -15,19 +15,25 @@ import {
   Text,
   StatusBar,
   TextInput,
-  Animated
+  Animated,
+  TouchableOpacity
 } from 'react-native';
 
+import Firebase from './src/components/firebaseServer';
 import Icon from 'react-native-vector-icons/Ionicons';
 import Card from './src/components/card';
 import Home from './src/pages/home';
 
-import Firebase from './src/components/firebaseUtil';
 
 const App = () => {
+  const [message, setMessage] = useState('');
   fadeValue = new Animated.Value(0);
-  var firebase = new Firebase();
+  const firebase = new Firebase()
 
+
+  function sendMessage(){
+    firebase.sendMessage("Message",{ message: message});
+  }
   return (
 
     <View style={styles.container}>
@@ -36,8 +42,6 @@ const App = () => {
         <Text style={styles.texto}>Adventinder</Text>
       </View>
       <ScrollView
-        onScrollBeginDrag={() => _start(0)}
-        onScrollEndDrag={() => _start(1)}
         style={styles.cards}
       >
         <Card />
@@ -62,12 +66,16 @@ const App = () => {
               placeholderTextColor="#FFF"
               multiline={true}
               maxLength={280}
+              onChangeText={setMessage}
             />
 
           </View>
-        <View style={styles.icone}>
+        <TouchableOpacity 
+          style={styles.icone}
+          onPress={sendMessage}
+        >
           <Icon name="ios-arrow-round-forward" size={44} color="#FFF" />
-        </View>
+        </TouchableOpacity>
         </View>   
      
     </View>
