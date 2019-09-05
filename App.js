@@ -27,7 +27,6 @@ import Home from './src/pages/home';
 
 const App = () => {
   const [message, setMessage] = useState('');
-  fadeValue = new Animated.Value(0);
   const firebase = new Firebase()
   const [messages, setMessages] = useState([]);
 
@@ -38,7 +37,7 @@ const App = () => {
     }
   
     loadMessages();
-  }, [messages])
+  }, [])
 
   function sendMessage(){
     firebase.sendMessage("Message",{ 

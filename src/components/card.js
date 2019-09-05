@@ -1,11 +1,18 @@
 import React from 'react';
 import { Image,Text, View, TouchableOpacity, StyleSheet } from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons';
-
+import Firebase from './firebaseServer';
+import { firestore } from 'firebase';
 
 const Card = (message) => {
+    const firebase = new Firebase()
 
-
+    async function incrementLike() {
+        
+        const increment = firestore.FieldValue.increment(1);
+        const resposta = await firebase.db.collection("Message").doc(message.message.id);
+        resposta.update({likes:increment});
+    }
     return (
         <View style={styles.container}>
             <View style={styles.card}>
@@ -22,7 +29,7 @@ const Card = (message) => {
             </View>
             <View style={styles.emoticon} >
                 <TouchableOpacity 
-                    onPress={onClick}
+                    onPress={incrementLike}
                 >
                     <Icon name="ios-heart" size={24} color= '#DF3A01'/>
                 </TouchableOpacity>
