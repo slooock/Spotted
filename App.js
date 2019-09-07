@@ -29,18 +29,30 @@ const App = () => {
   const [message, setMessage] = useState('');
   const firebase = new Firebase()
   const [messages, setMessages] = useState([]);
+  const [quant, setQuant] = useState(0);
+
 
   useEffect(() => {
-    async function loadMessages() {
-      const msg = await firebase.getMessages("Message");
-      setMessages(msg);
+    function ola() {
+
+      firebase.db.collection("Message").onSnapshot(function (doc) {
+        setQuant(doc.size);
+        console.log(doc.size);
+        data = doc.docs.map(doc => {
+          return {
+            id: doc.id,
+            message: doc.data().message,
+            likes: doc.data().likes
+          }
+        })
+        setMessages(data)
+      });
     }
-  
-    loadMessages();
+    ola();
   }, [])
 
-  function sendMessage(){
-    firebase.sendMessage("Message",{ 
+  function sendMessage() {
+    firebase.sendMessage("Message", {
       message: message,
       likes: 0
     });
@@ -66,41 +78,41 @@ const App = () => {
         }
       </ScrollView>
 
-        <View style={styles.back}>
-          <View style={styles.inputt}>
-            <TextInput
-              style={styles.textInput}
-              placeholder="Se declare para alguém :)"
-              placeholderTextColor="#FFF"
-              multiline={true}
-              maxLength={280}
-              value={message}
-              onChangeText={setMessage}
-            />
+      <View style={styles.back}>
+        <View style={styles.inputt}>
+          <TextInput
+            style={styles.textInput}
+            placeholder="Se declare para alguém :)"
+            placeholderTextColor="#FFF"
+            multiline={true}
+            maxLength={280}
+            value={message}
+            onChangeText={setMessage}
+          />
 
-          </View>
-        <TouchableOpacity 
+        </View>
+        <TouchableOpacity
           style={styles.icone}
           onPress={sendMessage}
           activeOpacity={0.7}
         >
           <Icon name="ios-arrow-round-forward" size={44} color="#FFF" />
         </TouchableOpacity>
-        </View>   
-     
+      </View>
+
     </View>
   );
 };
 
 const styles = StyleSheet.create({
-  back:{
+  back: {
     flexDirection: 'row',
   },
-  icone:{
+  icone: {
     backgroundColor: "rgb(161,216,242)",
     justifyContent: 'center',
     alignItems: 'center',
-    flex:0.2,
+    flex: 0.2,
     borderTopEndRadius: 20,
   },
   container: {
@@ -131,8 +143,8 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     backgroundColor: "rgb(161,216,242)",
     height: 80,
-    flex:1,
-    
+    flex: 1,
+
     borderTopStartRadius: 20,
   },
   textInput: {
