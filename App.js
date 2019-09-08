@@ -42,7 +42,8 @@ const App = () => {
           return {
             id: doc.id,
             message: doc.data().message,
-            likes: doc.data().likes
+            likes: doc.data().likes,
+            avatar: doc.data().avatar
           }
         })
         setMessages(data)
@@ -54,7 +55,8 @@ const App = () => {
   function sendMessage() {
     firebase.sendMessage("Message", {
       message: message,
-      likes: 0
+      likes: 0,
+      avatar: Math.floor(Math.random() * 14 + 1)
     });
     setMessage('');
   }

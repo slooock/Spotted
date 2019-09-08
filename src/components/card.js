@@ -24,7 +24,7 @@ import im15 from '../assets/cats/15.jpg';
 const Card = (message) => {
     const firebase = new Firebase()
     const [imagens, setImagens] = useState([im1,im2,im3,im4,im5,im6,im7,im8,im9,im10,im11,im12,im13,im14,im15]);
-    console.log("AAAAAAAAAAa");
+    console.log(message.message.avatar);
     async function incrementLike() {
         
         const increment = firestore.FieldValue.increment(1);
@@ -36,7 +36,7 @@ const Card = (message) => {
             <View style={styles.card}>
                 <Image
                     style={styles.avatar}
-                    source={imagens[Math.floor(Math.random() * 14 + 1)]}
+                    source={imagens[message.message.avatar]}
                 />
                 <View style={styles.teste}>
                 

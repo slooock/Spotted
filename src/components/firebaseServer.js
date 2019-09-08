@@ -35,7 +35,8 @@ class Firebase {
                     return {
                         id: doc.id,
                         message: doc.data().message,
-                        likes: doc.data().likes
+                        likes: doc.data().likes,
+                        avatar: doc.data().avatar
                     }
                 });
                 // array of cities objects
