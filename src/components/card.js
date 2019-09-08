@@ -1,12 +1,30 @@
-import React from 'react';
+import React,{useState} from 'react';
 import { Image,Text, View, TouchableOpacity, StyleSheet } from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons';
 import Firebase from './firebaseServer';
 import { firestore } from 'firebase';
 
+import im1 from '../assets/cats/1.jpg';
+import im2 from '../assets/cats/2.jpg';
+import im3 from '../assets/cats/3.jpg';
+import im4 from '../assets/cats/4.jpg';
+import im5 from '../assets/cats/5.jpg';
+import im6 from '../assets/cats/6.jpg';
+import im7 from '../assets/cats/7.jpg';
+import im8 from '../assets/cats/8.jpg';
+import im9 from '../assets/cats/9.png';
+import im10 from '../assets/cats/10.jpg';
+import im11 from '../assets/cats/11.jpg';
+import im12 from '../assets/cats/12.jpg';
+import im13 from '../assets/cats/13.jpg';
+import im14 from '../assets/cats/14.jpg';
+import im15 from '../assets/cats/15.jpg';
+
+
 const Card = (message) => {
     const firebase = new Firebase()
-
+    const [imagens, setImagens] = useState([im1,im2,im3,im4,im5,im6,im7,im8,im9,im10,im11,im12,im13,im14,im15]);
+    console.log("AAAAAAAAAAa");
     async function incrementLike() {
         
         const increment = firestore.FieldValue.increment(1);
@@ -18,7 +36,7 @@ const Card = (message) => {
             <View style={styles.card}>
                 <Image
                     style={styles.avatar}
-                    source={{ uri: 'https://st2.depositphotos.com/4529029/9603/v/950/depositphotos_96031530-stock-illustration-cartoon-animal-head-icon-cat.jpg' }}
+                    source={imagens[Math.floor(Math.random() * 14 + 1)]}
                 />
                 <View style={styles.teste}>
                 
@@ -52,7 +70,7 @@ const styles = StyleSheet.create({
         width: 68,
         height: 68,
         borderRadius: 34,
-        backgroundColor: '#000'
+        backgroundColor: '#FFF'
     },
     card:{
         flexDirection: 'row',
@@ -71,7 +89,7 @@ const styles = StyleSheet.create({
 
     },
     descricao:{
-        fontSize: 14,
+        fontSize: 20,
         marginTop: 5,
         color: '#666',
         lineHeight: 21
