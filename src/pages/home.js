@@ -1,61 +1,174 @@
-import React, { useState } from 'react';
-import { Animated, View, ScrollView, StyleSheet, TouchableOpacity } from 'react-native';
+/**
+ * Sample React Native App
+ * https://github.com/facebook/react-native
+ *
+ * @format
+ * @flow
+ */
 
-import AppBar from '../components/appbar';
+import React, { useEffect, useState } from 'react';
+import {
+    SafeAreaView,
+    StyleSheet,
+    ScrollView,
+    View,
+    Text,
+    StatusBar,
+    TextInput,
+    Animated,
+    TouchableOpacity
+} from 'react-native';
+import { firestore } from 'firebase';
+
+import Firebase from '../components/firebaseServer';
+import Icon from 'react-native-vector-icons/Ionicons';
 import Card from '../components/card';
-import FloatButton from '../components/floatButton';
-
-export default function Home() {
-    fadeValue = new Animated.Value(0)
 
 
-    _start = (value) => {
-        Animated.timing(fadeValue, {
-            toValue: value,
-            duration: 300
-        }).start();
-    };
+const Home = () => {
+    const [message, setMessage] = useState('');
+    const firebase = new Firebase()
+    const [messages, setMessages] = useState([]);
+    const [quant, setQuant] = useState(0);
 
+
+    useEffect(() => {
+        function ola() {
+
+            firebase.db.collection("Message").onSnapshot(function (doc) {
+                setQuant(doc.size);
+                console.log(doc.size);
+                data = doc.docs.map(doc => {
+                    return {
+                        id: doc.id,
+                        message: doc.data().message,
+                        likes: doc.data().likes,
+                        avatar: doc.data().avatar,
+                        insertData: doc.data().insertData
+                    }
+                })
+                data.sort(function (a, b) {
+                    if (a.insertData < b.insertData) {
+                        return 1;
+                    }
+                    if (a.insertData > b.insertData) {
+                        return -1;
+                    }
+                    // a must be equal to b
+                    return 0;
+                });
+                setMessages(data)
+            });
+        }
+        ola();
+    }, [])
+
+    function sendMessage() {
+        firebase.sendMessage("Message", {
+            message: message,
+            likes: 0,
+            avatar: Math.floor(Math.random() * 26 + 1),
+            insertData: firestore.FieldValue.serverTimestamp()
+        });
+        setMessage('');
+    }
     return (
-        <View style={styles.MainContainer}>
-            <AppBar />
+
+        <View style={styles.container}>
+
+            <View style={styles.appbar}>
+                <Text style={styles.texto}>Spotted </Text>
+            </View>
             <ScrollView
-                onScrollBeginDrag={() => _start(0)}
-                onScrollEndDrag={() => _start(1)}
+                style={styles.cards}
             >
-                <Card />
-                <Card />
-                <Card />
-                <Card />
-                <Card />
-                <Card />
-                <Card />
-                <Card />
-                <Card />
-                <Card />
-                <Card />
-                <Card />
+                {messages.length === 0 ?
+                    <Text style={styles.empty}>Acabou :(</Text>
+                    : (
+                        messages.map((message, index) => (
+                            <Card key={message.id} message={message} />
+                        ))
+                    )
+                }
             </ScrollView>
-            <Animated.View
-                style={{
-                    opacity: fadeValue,
-                    position: 'absolute',
-                    right: 20,
-                    bottom: 20,
-                }}
-            >
-                <TouchableOpacity>
-                    <FloatButton />
+
+            <View style={styles.back}>
+                <View style={styles.inputt}>
+                    <TextInput
+                        style={styles.textInput}
+                        placeholder="Se declare para alguém :)"
+                        placeholderTextColor="#FFF"
+                        multiline={true}
+                        maxLength={280}
+                        value={message}
+                        onChangeText={setMessage}
+                    />
+
+                </View>
+                <TouchableOpacity
+                    style={styles.icone}
+                    onPress={sendMessage}
+                    activeOpacity={0.7}
+                >
+                    <Icon name="ios-arrow-round-forward" size={44} color="#FFF" />
                 </TouchableOpacity>
-            </Animated.View>
+            </View>
+
         </View>
     );
 };
 
-
 const styles = StyleSheet.create({
-    MainContainer: {
-        flex: 1,
+    back: {
+        flexDirection: 'row',
     },
+    icone: {
+        backgroundColor: "rgb(161,216,242)",
+        justifyContent: 'center',
+        alignItems: 'center',
+        flex: 0.2,
+        borderTopEndRadius: 20,
+    },
+    container: {
+        flex: 1,
+        backgroundColor: "#FFF"
+    },
+    appbar: {
+        backgroundColor: "rgb(161,216,242)",
+        elevation: 3,
+        height: 60,
+        flexDirection: 'row',
+        justifyContent: 'center',
+        alignItems: 'center',
+    },
+    texto: {
+        fontSize: 40,
+        fontFamily: 'SrabiScript',
+        color: '#FFF'
+    },
+    cards: {
+        flex: 1,
+        backgroundColor: "rgb(224,230,244)"
+    },
+    inputt: {
+        paddingHorizontal: 10,
+        flexDirection: 'row',
+        justifyContent: 'center',
+        alignItems: 'center',
+        backgroundColor: "rgb(161,216,242)",
+        height: 80,
+        flex: 1,
+
+        borderTopStartRadius: 20,
+    },
+    textInput: {
+        flex: 1,
+        fontSize: 20,
+        color: "#FFF",
+        marginRight: 10
+    },
+
+
 });
 
+export default Home;

@@ -41,7 +41,6 @@ const Card = (message) => {
         const resposta = await firebase.db.collection("Message").doc(message.message.id);
         resposta.update({likes:increment});
     }
-    console.log("AAAAAAAAAAAA");
     return (
         <View style={styles.container}>
             <View style={styles.card}>
