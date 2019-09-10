@@ -36,6 +36,8 @@
 		033B4D15C82A4C2D8921DF94 /* RetrofestShadow.ttf in Resources */ = {isa = PBXBuildFile; fileRef = D7448079251B4EA4A104C8DB /* RetrofestShadow.ttf */; };
 		18970005B4844F88A9ABD117 /* RetrofestShadowExtrude.ttf in Resources */ = {isa = PBXBuildFile; fileRef = E6B7FD6B98C142CCB85A7487 /* RetrofestShadowExtrude.ttf */; };
 		FDDC2353E4CD4223B321419D /* letterbest.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 30630D6BAD8C483297DB7103 /* letterbest.ttf */; };
+		A65C99C8F7954A55B233861E /* Chalet-NewYorkNineteenSeventy_10019.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 339460F871E945FFAF315B24 /* Chalet-NewYorkNineteenSeventy_10019.ttf */; };
+		FCE9DD978ACD4768BD8EA2AE /* Tinder.ttf in Resources */ = {isa = PBXBuildFile; fileRef = D00C6F8DA3194CEDB88F8C2E /* Tinder.ttf */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -92,6 +94,8 @@
 		D7448079251B4EA4A104C8DB /* RetrofestShadow.ttf */ = {isa = PBXFileReference; name = "RetrofestShadow.ttf"; path = "../assets/fonts/RetrofestShadow.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
 		E6B7FD6B98C142CCB85A7487 /* RetrofestShadowExtrude.ttf */ = {isa = PBXFileReference; name = "RetrofestShadowExtrude.ttf"; path = "../assets/fonts/RetrofestShadowExtrude.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
 		30630D6BAD8C483297DB7103 /* letterbest.ttf */ = {isa = PBXFileReference; name = "letterbest.ttf"; path = "../assets/fonts/letterbest.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		339460F871E945FFAF315B24 /* Chalet-NewYorkNineteenSeventy_10019.ttf */ = {isa = PBXFileReference; name = "Chalet-NewYorkNineteenSeventy_10019.ttf"; path = "../assets/fonts/Chalet-NewYorkNineteenSeventy_10019.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		D00C6F8DA3194CEDB88F8C2E /* Tinder.ttf */ = {isa = PBXFileReference; name = "Tinder.ttf"; path = "../assets/fonts/Tinder.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -223,6 +227,8 @@
 				D7448079251B4EA4A104C8DB /* RetrofestShadow.ttf */,
 				E6B7FD6B98C142CCB85A7487 /* RetrofestShadowExtrude.ttf */,
 				30630D6BAD8C483297DB7103 /* letterbest.ttf */,
+				339460F871E945FFAF315B24 /* Chalet-NewYorkNineteenSeventy_10019.ttf */,
+				D00C6F8DA3194CEDB88F8C2E /* Tinder.ttf */,
 			);
 			name = Resources;
 			sourceTree = "<group>";
@@ -385,6 +391,8 @@
 				033B4D15C82A4C2D8921DF94 /* RetrofestShadow.ttf in Resources */,
 				18970005B4844F88A9ABD117 /* RetrofestShadowExtrude.ttf in Resources */,
 				FDDC2353E4CD4223B321419D /* letterbest.ttf in Resources */,
+				A65C99C8F7954A55B233861E /* Chalet-NewYorkNineteenSeventy_10019.ttf in Resources */,
+				FCE9DD978ACD4768BD8EA2AE /* Tinder.ttf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

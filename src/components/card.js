@@ -19,18 +19,29 @@ import im12 from '../assets/cats/12.jpg';
 import im13 from '../assets/cats/13.jpg';
 import im14 from '../assets/cats/14.jpg';
 import im15 from '../assets/cats/15.jpg';
-
+import im16 from '../assets/cats/16.png';
+import im17 from '../assets/cats/17.png';
+import im18 from '../assets/cats/18.png';
+import im19 from '../assets/cats/19.png';
+import im20 from '../assets/cats/20.png';
+import im21 from '../assets/cats/21.png';
+import im22 from '../assets/cats/22.png';
+import im23 from '../assets/cats/23.png';
+import im24 from '../assets/cats/24.png';
+import im25 from '../assets/cats/25.png';
+import im26 from '../assets/cats/26.jpg';
+import im27 from '../assets/cats/27.jpg';
 
 const Card = (message) => {
     const firebase = new Firebase()
-    const [imagens, setImagens] = useState([im1,im2,im3,im4,im5,im6,im7,im8,im9,im10,im11,im12,im13,im14,im15]);
-    console.log(message.message.avatar);
+    const [imagens, setImagens] = useState([im1, im2, im3, im4, im5, im6, im7, im8, im9, im10, im11, im12, im13, im14, im15, im16,im17,im18,im19,im20,im21,im22,im23,im24,im25,im26,im27]);
     async function incrementLike() {
         
         const increment = firestore.FieldValue.increment(1);
         const resposta = await firebase.db.collection("Message").doc(message.message.id);
         resposta.update({likes:increment});
     }
+    console.log("AAAAAAAAAAAA");
     return (
         <View style={styles.container}>
             <View style={styles.card}>
@@ -49,7 +60,22 @@ const Card = (message) => {
                 <TouchableOpacity 
                     onPress={incrementLike}
                 >
-                    <Icon name="ios-heart" size={24} color= '#DF3A01'/>
+                    {
+                        message.message.likes < 5 ?
+                            <Icon name="ios-heart" size={24} color="#F6C7B7" /> : <View></View>
+                    }
+                    {
+                        message.message.likes >= 5 && message.message.likes < 10 ?
+                            <Icon name="ios-heart" size={24} color="#F7A398" /> : <View></View>
+                    }
+                    {
+                        message.message.likes >= 10 && message.message.likes < 15 ?
+                            <Icon name="ios-heart" size={24} color="#FA7F77" /> : <View></View>
+                    }
+                    {
+                        message.message.likes >= 15 ?
+                            <Icon name="ios-heart" size={24} color="#B42529" /> : <View></View>
+                    }
                 </TouchableOpacity>
                 <Text style={styles.quantidade}>{message.message.likes}</Text>
             </View>

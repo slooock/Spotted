@@ -18,6 +18,7 @@ import {
   Animated,
   TouchableOpacity
 } from 'react-native';
+import { firestore } from 'firebase';
 
 import Firebase from './src/components/firebaseServer';
 import Icon from 'react-native-vector-icons/Ionicons';
@@ -43,9 +44,20 @@ const App = () => {
             id: doc.id,
             message: doc.data().message,
             likes: doc.data().likes,
-            avatar: doc.data().avatar
+            avatar: doc.data().avatar,
+            insertData : doc.data().insertData
           }
         })
+        data.sort(function (a, b) {
+          if (a.insertData < b.insertData) {
+            return 1;
+          }
+          if (a.insertData > b.insertData) {
+            return -1;
+          }
+          // a must be equal to b
+          return 0;
+        });
         setMessages(data)
       });
     }
@@ -56,7 +68,8 @@ const App = () => {
     firebase.sendMessage("Message", {
       message: message,
       likes: 0,
-      avatar: Math.floor(Math.random() * 14 + 1)
+      avatar: Math.floor(Math.random() * 26 + 1),
+      insertData: firestore.FieldValue.serverTimestamp()
     });
     setMessage('');
   }
