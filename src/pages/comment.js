@@ -114,13 +114,27 @@ const Comment = () => {
                 </View>
             </ScrollView>
 
-
+            <View style={styles.floatButton} >
+                <Icon name='ios-add' size={50} color="#FFF" ></Icon>
+            </View>
         </View>
     );
 };
 
 const styles = StyleSheet.create({
 
+    floatButton:{
+        height:70,
+        width:70,
+        backgroundColor: "rgb(161,216,242)",
+        position:'absolute',
+        right: 20,
+        bottom:20,
+        borderRadius: 35,
+        justifyContent: 'center',
+        alignItems: 'center',
+        alignContent: 'center',
+    },
     container:{
         backgroundColor: "#FFF",
     },
