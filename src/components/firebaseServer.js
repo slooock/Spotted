@@ -34,7 +34,9 @@ class Firebase {
                 const data = querySnapshot.docs.map(doc => {
                     return {
                         id: doc.id,
-                        message: doc.data().message
+                        message: doc.data().message,
+                        likes: doc.data().likes,
+                        avatar: doc.data().avatar
                     }
                 });
                 // array of cities objects
