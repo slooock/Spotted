@@ -55,7 +55,8 @@ export default function Question({ navigation }) {
         const data = await resposta.get();
         let vetor = data.data().comment;
         vetor.push(comment);
-        resposta.update({ comment: vetor });       
+        resposta.update({ comment: vetor });
+        handleComment();
     }
     function handleComment() {
         navigation.navigate('Comment',{message:message});

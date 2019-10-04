@@ -58,6 +58,9 @@ import im27 from '../assets/cats/27.jpg';
 const Comment = ({ navigation }) => {
     const [imagens, setImagens] = useState([im1, im2, im3, im4, im5, im6, im7, im8, im9, im10, im11, im12, im13, im14, im15, im16, im17, im18, im19, im20, im21, im22, im23, im24, im25, im26, im27]);
     const [message, setMessage] = useState(navigation.getParam('message'));
+    const [vetor, setVetor] = useState([]);
+
+    const firebase = new Firebase();
 
     async function handleQuestion(message) {
         navigation.navigate('Question', { message: message });
@@ -65,6 +68,20 @@ const Comment = ({ navigation }) => {
     function handleHome() {
         navigation.navigate('Home');
     }
+
+    useEffect(() => {
+        async function ola() {
+            const resposta = await firebase.db.collection("Message").doc(message.id);
+            resposta.onSnapshot(docSnapshot => {
+                setVetor(docSnapshot.data().comment);
+            }, err => {
+                console.log(`Encountered error: ${err}`);
+            });
+
+        }
+        ola();
+    }, [])
+   
     return (
         <View style={styles.container}>
             <ScrollView>
@@ -94,14 +111,31 @@ const Comment = ({ navigation }) => {
                         <Text style={styles.descricao}>{message.message}</Text>
                     </View>
                     <View style={styles.rowComent}>
-                        <Text style={styles.quant}>4</Text>
+                        <Text style={styles.quant}>{vetor.length}</Text>
                         <Text style={styles.like}>Comentarios</Text>
                         <Text style={styles.quant}>{message.likes}</Text>
                         <Text style={styles.like}>Curtidas</Text>
                     </View>
                 </View>
                 <View style={styles.marginTop}>
-
+                    {
+                        vetor.map(
+                            (item,index)=>{
+                                return(
+                                    <View key={index}>
+                                        <Card 
+                                            key={index} 
+                                            message={message} 
+                                            comment={{
+                                                message:item,
+                                                likes: 0,
+                                                avatar: 9
+                                            }} />
+                                    </View>
+                                );
+                            }
+                        )
+                    }
 
                 </View>
             </ScrollView>
