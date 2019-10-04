@@ -25,9 +25,9 @@ import Icon from 'react-native-vector-icons/Ionicons';
 import Card from '../components/card';
 
 
-const Home = () => {
+const Home = ({ navigation }) => {
     const [message, setMessage] = useState('');
-    const firebase = new Firebase()
+    const firebase = new Firebase();
     const [messages, setMessages] = useState([]);
     const [quant, setQuant] = useState(0);
 
@@ -37,7 +37,6 @@ const Home = () => {
 
             firebase.db.collection("Message").onSnapshot(function (doc) {
                 setQuant(doc.size);
-                console.log(doc.size);
                 data = doc.docs.map(doc => {
                     return {
                         id: doc.id,
@@ -63,13 +62,19 @@ const Home = () => {
         ola();
     }, [])
 
+    async function handleComment(message) {
+        navigation.navigate('Comment',{ message: message });
+    }
+
     function sendMessage() {
         firebase.sendMessage("Message", {
             message: message,
             likes: 0,
             avatar: Math.floor(Math.random() * 26 + 1),
-            insertData: firestore.FieldValue.serverTimestamp()
+            insertData: firestore.FieldValue.serverTimestamp(),
+            comment:[]
         });
+
         setMessage('');
     }
     return (
@@ -86,7 +91,12 @@ const Home = () => {
                     <Text style={styles.empty}>Acabou :(</Text>
                     : (
                         messages.map((message, index) => (
-                            <Card key={message.id} message={message} />
+                            <TouchableOpacity key={message.id}
+                                activeOpacity={0.9}
+                                onPress={()=>handleComment(message)}
+                            >
+                                <Card key={message.id} message={message} />
+                            </TouchableOpacity>
                         ))
                     )
                 }

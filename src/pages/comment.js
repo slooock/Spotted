@@ -55,87 +55,82 @@ import im26 from '../assets/cats/26.jpg';
 import im27 from '../assets/cats/27.jpg';
 
 
-const Comment = () => {
+const Comment = ({ navigation }) => {
     const [imagens, setImagens] = useState([im1, im2, im3, im4, im5, im6, im7, im8, im9, im10, im11, im12, im13, im14, im15, im16, im17, im18, im19, im20, im21, im22, im23, im24, im25, im26, im27]);
-    const [message, setMessage] = useState({
-        id: "ADASDSADSAD",
-        message: "so n falo q vai ter stream pq to sem chave da gh e chego 5 da manha blz mas farei esta semana",
-        likes: 123,
-        avatar: 1,
-        insertData: "12-sept"
-    });
+    const [message, setMessage] = useState(navigation.getParam('message'));
 
+    async function handleQuestion(message) {
+        navigation.navigate('Question', { message: message });
+    }
+    function handleHome() {
+        navigation.navigate('Home');
+    }
     return (
         <View style={styles.container}>
             <ScrollView>
                 <View style={styles.appbar}>
                     <View style={styles.icon}>
-                        <Icon name='ios-arrow-back' size={33} color="rgb(161, 216, 242)" ></Icon>
+                        <TouchableOpacity onPress={handleHome}>
+                            <Icon name='ios-arrow-back' size={33} color="rgb(161, 216, 242)" ></Icon>
+                        </TouchableOpacity>
                     </View>
                     <View style={styles.logo}>
                         <Text style={styles.texto}>Spotted </Text>
                     </View>
                 </View>
                 <View style={styles.marginHorizontal10}>
-                <View style={styles.row} >
-                    <View style={styles.colum} >
-                        <View style={styles.traco} />
-                        <View>
-                            <Image
-                                style={styles.avatar}
-                                source={imagens[1]}
-                            />
+                    <View style={styles.row} >
+                        <View style={styles.colum} >
+                            <View style={styles.traco} />
+                            <View>
+                                <Image
+                                    style={styles.avatar}
+                                    source={imagens[message.avatar]}
+                                />
+                            </View>
                         </View>
                     </View>
-                </View>
-                <View >
-                    <Text style={styles.descricao}>Uma comitiva do governo brasileiro vai a Washington para negociar um acordo para facilitar o comércio com os EUA. O Itamaraty quer fechar até o fim do ano um protocolo para reduzir a burocracia nos negócios – a discussão de tarifas vai ficar para depois.</Text>
-                </View>
-                <View style={styles.rowComent}>
-                    <Text style={styles.quant}>4</Text>
-                    <Text style={styles.like}>Comentarios</Text>
-                    <Text style={styles.quant}>213</Text>
-                    <Text style={styles.like}>Curtidas</Text>
-                </View>
+                    <View >
+                        <Text style={styles.descricao}>{message.message}</Text>
+                    </View>
+                    <View style={styles.rowComent}>
+                        <Text style={styles.quant}>4</Text>
+                        <Text style={styles.like}>Comentarios</Text>
+                        <Text style={styles.quant}>{message.likes}</Text>
+                        <Text style={styles.like}>Curtidas</Text>
+                    </View>
                 </View>
                 <View style={styles.marginTop}>
-                <Card key={message.id} message={message} />
-                <Card key={message.id} message={message} />
-                <Card key={message.id} message={message} />
-                <Card key={message.id} message={message} />
-                <Card key={message.id} message={message} />
-                <Card key={message.id} message={message} />
-                <Card key={message.id} message={message} />
-                <Card key={message.id} message={message} />
-                <Card key={message.id} message={message} />
-                <Card key={message.id} message={message} />
-                <Card key={message.id} message={message} />
-                <Card key={message.id} message={message} />
+
+
                 </View>
             </ScrollView>
 
-            <View style={styles.floatButton} >
+            <TouchableOpacity 
+                style={styles.floatButton} 
+                onPress={()=>handleQuestion(message)}
+            >
                 <Icon name='ios-add' size={50} color="#FFF" ></Icon>
-            </View>
+            </TouchableOpacity>
         </View>
     );
 };
 
 const styles = StyleSheet.create({
 
-    floatButton:{
-        height:70,
-        width:70,
+    floatButton: {
+        height: 60,
+        width: 60,
         backgroundColor: "rgb(161,216,242)",
-        position:'absolute',
+        position: 'absolute',
         right: 20,
-        bottom:20,
-        borderRadius: 35,
+        bottom: 20,
+        borderRadius: 30,
         justifyContent: 'center',
         alignItems: 'center',
         alignContent: 'center',
     },
-    container:{
+    container: {
         backgroundColor: "#FFF",
     },
     appbar: {
@@ -145,10 +140,10 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         alignItems: 'center',
     },
-    icon:{
+    icon: {
         marginLeft: 10,
     },
-    logo:{
+    logo: {
         flex: 1,
         justifyContent: 'center',
         alignItems: 'center',
@@ -196,11 +191,11 @@ const styles = StyleSheet.create({
         color: '#666',
         marginRight: 10
     },
-    marginHorizontal10:{
+    marginHorizontal10: {
         marginHorizontal: 10
     },
-    cards:{
-        marginTop:20
+    cards: {
+        marginTop: 20
     }
 });
 

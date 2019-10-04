@@ -25,11 +25,12 @@ import Icon from 'react-native-vector-icons/Ionicons';
 import Card from './src/components/card';
 import Comment from './src/pages/comment';
 
+import Route from './src/routes';
 
 const App = () => {
   return (
 
-    <Comment></Comment>
+    <Route/>
   );
 };
 
