@@ -80,7 +80,7 @@ const Comment = ({ navigation }) => {
 
         }
         ola();
-    }, [])
+    }, []);
    
     return (
         <View style={styles.container}>
@@ -127,9 +127,9 @@ const Comment = ({ navigation }) => {
                                             key={index} 
                                             message={message} 
                                             comment={{
-                                                message:item,
-                                                likes: 0,
-                                                avatar: 9
+                                                message:item.message,
+                                                likes: item.likes,
+                                                avatar: item.avatar
                                             }} />
                                     </View>
                                 );

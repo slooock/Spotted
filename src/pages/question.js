@@ -47,6 +47,7 @@ import im27 from '../assets/cats/27.jpg';
 export default function Question({ navigation }) {
     const [imagens, setImagens] = useState([im1, im2, im3, im4, im5, im6, im7, im8, im9, im10, im11, im12, im13, im14, im15, im16, im17, im18, im19, im20, im21, im22, im23, im24, im25, im26, im27]);
     const [comment, setComment] = useState('');
+    const [avatar,setAvatar] = useState(Math.floor(Math.random() * 26 + 1));
     const [message, setMessage] = useState(navigation.getParam('message'));
     const firebase = new Firebase();
 
@@ -54,7 +55,11 @@ export default function Question({ navigation }) {
         const resposta = await firebase.db.collection("Message").doc(message.id);
         const data = await resposta.get();
         let vetor = data.data().comment;
-        vetor.push(comment);
+        vetor.push({
+            message:comment,
+            likes: 0,
+            avatar: avatar, 
+        });
         resposta.update({ comment: vetor });
         handleComment();
     }
@@ -79,7 +84,7 @@ export default function Question({ navigation }) {
             <View style={styles.comentario}>
                 <Image
                     style={styles.avatar}
-                    source={imagens[2]}
+                    source={imagens[avatar]}
                 />
                 <View style={styles.textInput}>
                     <TextInput style={styles.text}

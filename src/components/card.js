@@ -50,6 +50,8 @@ const Card = (message) => {
             }
         }
     });
+    
+    
     async function incrementLike() {
         
         const increment = firestore.FieldValue.increment(1);
