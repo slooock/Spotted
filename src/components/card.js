@@ -34,6 +34,7 @@ import im27 from '../assets/cats/27.jpg';
 
 const Card = (message) => {
     const firebase = new Firebase()
+    const [teste,setTeste] = useState("zerado");
     const [imagens, setImagens] = useState([im1, im2, im3, im4, im5, im6, im7, im8, im9, im10, im11, im12, im13, im14, im15, im16,im17,im18,im19,im20,im21,im22,im23,im24,im25,im26,im27]);
     const [msg, setMsg] = useState(() => {
         if (message.comment) {
@@ -47,16 +48,19 @@ const Card = (message) => {
                 message: message.message.message,
                 likes: message.message.likes,
                 avatar: message.message.avatar,
+                id: message.message.id,
             }
         }
     });
     
     
     async function incrementLike() {
-        
         const increment = firestore.FieldValue.increment(1);
         const resposta = await firebase.db.collection("Message").doc(msg.id);
         resposta.update({likes:increment});
+        const arroz =await resposta.get();
+        const data = await arroz.data();
+        setMsg({ ...msg, ['likes']: data.likes });
     }  
     return (
         <View style={styles.container}>
