@@ -1,4 +1,4 @@
-import React,{useState} from 'react';
+import React,{useState,useEffect} from 'react';
 import { Image,Text, View, TouchableOpacity, StyleSheet } from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons';
 import Firebase from './firebaseServer';
@@ -42,6 +42,8 @@ const Card = (message) => {
                 message: message.comment.message,
                 likes: message.comment.likes,
                 avatar: message.comment.avatar,
+                id: message.comment.id,
+                index: message.comment.index
             }
         } else {
             return {
@@ -55,13 +57,56 @@ const Card = (message) => {
     
     
     async function incrementLike() {
-        const increment = firestore.FieldValue.increment(1);
-        const resposta = await firebase.db.collection("Message").doc(msg.id);
-        resposta.update({likes:increment});
-        const arroz =await resposta.get();
-        const data = await arroz.data();
-        setMsg({ ...msg, ['likes']: data.likes });
+        if(!message.comment){
+            const increment = firestore.FieldValue.increment(1);
+            const resposta = await firebase.db.collection("Message").doc(msg.id);
+            resposta.update({ likes: increment });
+        }else{
+            const resposta = await firebase.db.collection("Message").doc(msg.id);
+            const data = await resposta.get();
+            const informacoes = await data.data();
+            const comentarios = await informacoes.comment;
+            const comentariosAtualizados = []
+
+            comentarios.map((item,index)=>{
+
+                if(index == msg.index)
+                {
+                    const itemAtualizado = item;
+                    itemAtualizado.likes = itemAtualizado.likes + 1;
+                    comentariosAtualizados.push(itemAtualizado);
+                }else{
+                    comentariosAtualizados.push(item)
+                }
+            });
+            resposta.update({ comment: comentariosAtualizados });
+        }
+
     }  
+
+    useEffect(() => {
+        function listen(){
+            
+            firebase.db.collection("Message").doc(msg.id).onSnapshot(function (doc) {
+                const data = doc.data();
+                if(!message.comment){
+                    const msgAlterada = {
+                        message: data.message,
+                        likes: data.likes,
+                        avatar: data.avatar,
+                        id: message.message.id
+                    };
+                    setMsg(msgAlterada);
+                    
+                }else{
+                    const item = data.comment[msg.index];
+                    setMsg({...msg,['likes']:item.likes});
+                }
+            });
+        }
+        listen();
+    }, [])
+
     return (
         <View style={styles.container}>
             <View style={styles.card}>

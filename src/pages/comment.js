@@ -129,7 +129,9 @@ const Comment = ({ navigation }) => {
                                             comment={{
                                                 message:item.message,
                                                 likes: item.likes,
-                                                avatar: item.avatar
+                                                avatar: item.avatar,
+                                                index: index,
+                                                id: message.id
                                             }} />
                                     </View>
                                 );
