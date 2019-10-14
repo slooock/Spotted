@@ -25,7 +25,7 @@ import Icon from 'react-native-vector-icons/Ionicons';
 import Card from '../components/card';
 
 
-const Home = ({ navigation }) => {
+const arroz = ({ navigation }) => {
     const [message, setMessage] = useState('');
     const firebase = new Firebase();
     const [messages, setMessages] = useState([]);
@@ -77,56 +77,12 @@ const Home = ({ navigation }) => {
 
         setMessage('');
     }
-
-    function handleTeste() {
-        navigation.navigate('arroz');
-    }
     return (
 
         <View style={styles.container}>
+
             <View style={styles.appbar}>
                 <Text style={styles.texto}>Spotted </Text>
-            </View>
-            <ScrollView
-                style={styles.cards}
-            >
-                {messages.length === 0 ?
-                    <Text style={styles.empty}>Acabou :(</Text>
-                    : (
-                        messages.map((message, index) => {
-                            return(
-                            
-                            <TouchableOpacity key={message.id}
-                                activeOpacity={0.9}
-                                onPress={()=>handleComment(message)}
-                            >
-                                <Card key={message.id} message={message} navigation={navigation}/>
-                            </TouchableOpacity>
-                        )})
-                    )
-                }
-            </ScrollView>
-
-            <View style={styles.back}>
-                <View style={styles.inputt}>
-                    <TextInput
-                        style={styles.textInput}
-                        placeholder="Se declare para alguém :)"
-                        placeholderTextColor="#FFF"
-                        multiline={true}
-                        maxLength={280}
-                        value={message}
-                        onChangeText={setMessage}
-                    />
-
-                </View>
-                <TouchableOpacity
-                    style={styles.icone}
-                    onPress={sendMessage}
-                    activeOpacity={0.7}
-                >
-                    <Icon name="ios-arrow-round-forward" size={44} color="#FFF" />
-                </TouchableOpacity>
             </View>
 
         </View>
@@ -186,4 +142,4 @@ const styles = StyleSheet.create({
 
 });
 
-export default Home;
+export default arroz;
