@@ -178,6 +178,9 @@ const styles = StyleSheet.create({
     },
     icon: {
         marginLeft: 10,
+        height: 40,
+        width: 100,
+        position: 'absolute'
     },
     logo: {
         flex: 1,

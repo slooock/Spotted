@@ -149,4 +149,8 @@ const styles = StyleSheet.create({
         borderRadius: 34,
         backgroundColor: '#FFF'
     },
+    icon: {
+        height: 40,
+        width: 100,
+    },
 });
